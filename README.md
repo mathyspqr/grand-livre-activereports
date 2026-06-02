@@ -34,21 +34,24 @@ npx ng serve
 ## Utilisation
 
 1. Aller sur **Viewer**.
-2. Cliquer **« Charger des écritures »** et sélectionner un fichier `Ecriture.json`
-   (voir structure attendue ci-dessous). Le grand livre se génère à la volée.
-3. Choisir la **colonne de référence** : N° Pièce / ID écriture / N° Écriture.
-4. **Exporter en PDF** depuis la barre d'outils du viewer.
-5. **Designer** : modifier la mise en page, puis « Sauvegarder » → télécharge un modèle `.rdlx-json`.
-6. De retour sur le Viewer : **« Charger un modèle »** pour réappliquer un `.rdlx-json` à vos données.
+2. **« Charger le plan comptable »** (référentiel des comptes).
+3. **« Charger des écritures »** (`Ecriture.json`). Le grand livre se génère dès que les deux sont chargés.
+4. Choisir la **colonne de référence** : N° Pièce / ID écriture / N° Écriture.
+5. **Exporter en PDF** depuis la barre d'outils du viewer.
+6. **Designer** : modifier la mise en page, puis « Sauvegarder » → télécharge un modèle `.rdlx-json`.
+7. De retour sur le Viewer : **« Charger un modèle »** pour réappliquer un `.rdlx-json` à vos données.
 
 ---
 
 ## Données
 
-| Fichier | Rôle | Emplacement |
+| Fichier | Rôle | Chargement |
 |---|---|---|
-| `PlanComptableOfficiel.json` | Plan comptable = **référentiel** (numéro + intitulé) | fourni dans `src/assets/data/` |
-| `Ecriture.json` | Les **écritures** comptables | **importé par l'utilisateur** (non embarqué) |
+| Plan comptable | **référentiel** (numéro + intitulé des comptes) | **importé par l'utilisateur** |
+| `Ecriture.json` | les **écritures** comptables | **importé par l'utilisateur** |
+
+> ⚠️ **Aucune donnée n'est embarquée dans l'application** : le plan comptable peut contenir des comptes
+> nominatifs (données personnelles). L'utilisateur fournit les deux fichiers au moment de l'utilisation.
 
 **Jointure** : `Ecriture.Compte` → `PlanComptable.Numero` (récupère l'intitulé du compte).
 
