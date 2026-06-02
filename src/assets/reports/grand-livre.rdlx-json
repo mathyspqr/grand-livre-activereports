@@ -1,0 +1,629 @@
+{
+  "Name": "Grand Livre",
+  "Width": "21cm",
+  "Page": {
+    "PageWidth": "21cm",
+    "PageHeight": "29.7cm",
+    "TopMargin": "1.5cm",
+    "BottomMargin": "1.5cm",
+    "LeftMargin": "1.5cm",
+    "RightMargin": "1.5cm",
+    "Columns": 1
+  },
+  "ReportParameters": [
+    {
+      "Name": "PieceColumn",
+      "DataType": "String",
+      "Prompt": "Colonne référence (NumeroPiece, ID ou Numero)",
+      "DefaultValue": {
+        "Values": ["NumeroPiece"]
+      },
+      "ValidValues": {
+        "ParameterValues": [
+          { "Label": "N° Pièce", "Value": "NumeroPiece" },
+          { "Label": "ID écriture", "Value": "ID" },
+          { "Label": "N° Écriture", "Value": "Numero" }
+        ]
+      }
+    }
+  ],
+  "DataSources": [
+    {
+      "Name": "GrandLivreDS",
+      "ConnectionProperties": {
+        "DataProvider": "GrandLivreProvider",
+        "ConnectString": "GrandLivreData"
+      }
+    }
+  ],
+  "DataSets": [
+    {
+      "Name": "GrandLivreData",
+      "Query": {
+        "DataSourceName": "GrandLivreDS",
+        "CommandText": "GrandLivreData"
+      },
+      "Fields": [
+        { "Name": "CompteNumero", "DataField": "CompteNumero" },
+        { "Name": "CompteIntitule", "DataField": "CompteIntitule" },
+        { "Name": "EcritureID", "DataField": "EcritureID" },
+        { "Name": "NumeroPiece", "DataField": "NumeroPiece" },
+        { "Name": "NumeroEcriture", "DataField": "NumeroEcriture" },
+        { "Name": "DateOperation", "DataField": "DateOperation" },
+        { "Name": "Libelle", "DataField": "Libelle" },
+        { "Name": "Debit", "DataField": "Debit" },
+        { "Name": "Credit", "DataField": "Credit" }
+      ]
+    }
+  ],
+  "Body": {
+    "ReportItems": [
+      {
+        "Type": "Table",
+        "Name": "TableGrandLivre",
+        "DataSetName": "GrandLivreData",
+        "Top": "0cm",
+        "Left": "0cm",
+        "Width": "18cm",
+        "Grouping": {
+          "GroupExpressions": ["=Fields!CompteNumero.Value"]
+        },
+        "TableGroups": [
+          {
+            "Grouping": {
+              "Name": "GroupeCompte",
+              "GroupExpressions": ["=Fields!CompteNumero.Value"]
+            },
+            "Header": {
+              "TableRows": [
+                {
+                  "Height": "0.8cm",
+                  "TableCells": [
+                    {
+                      "Item": {
+                        "Type": "TextBox",
+                        "Name": "CompteHeader",
+                        "Value": "=Fields!CompteNumero.Value & \" - \" & Fields!CompteIntitule.Value",
+                        "Style": {
+                          "FontWeight": "Bold",
+                          "FontSize": "11pt",
+                          "BackgroundColor": "#E8EAF6",
+                          "PaddingLeft": "4pt",
+                          "PaddingTop": "2pt",
+                          "PaddingBottom": "2pt",
+                          "Color": "#1A237E"
+                        },
+                        "CanGrow": true
+                      },
+                      "ColSpan": 6
+                    }
+                  ]
+                },
+                {
+                  "Height": "0.6cm",
+                  "TableCells": [
+                    {
+                      "Item": {
+                        "Type": "TextBox",
+                        "Name": "ColHeaderPiece",
+                        "Value": "=IIF(Parameters!PieceColumn.Value = \"NumeroPiece\", \"N° Pièce\", IIF(Parameters!PieceColumn.Value = \"ID\", \"ID\", \"N° Écriture\"))",
+                        "Style": {
+                          "FontWeight": "Bold",
+                          "FontSize": "8pt",
+                          "BackgroundColor": "#C5CAE9",
+                          "TextAlign": "Center",
+                          "PaddingTop": "2pt",
+                          "PaddingBottom": "2pt",
+                          "BorderStyle": { "Default": "Solid" },
+                          "BorderWidth": { "Default": "0.5pt" },
+                          "BorderColor": { "Default": "#9FA8DA" }
+                        }
+                      }
+                    },
+                    {
+                      "Item": {
+                        "Type": "TextBox",
+                        "Name": "ColHeaderDate",
+                        "Value": "Date",
+                        "Style": {
+                          "FontWeight": "Bold",
+                          "FontSize": "8pt",
+                          "BackgroundColor": "#C5CAE9",
+                          "TextAlign": "Center",
+                          "PaddingTop": "2pt",
+                          "PaddingBottom": "2pt",
+                          "BorderStyle": { "Default": "Solid" },
+                          "BorderWidth": { "Default": "0.5pt" },
+                          "BorderColor": { "Default": "#9FA8DA" }
+                        }
+                      }
+                    },
+                    {
+                      "Item": {
+                        "Type": "TextBox",
+                        "Name": "ColHeaderLibelle",
+                        "Value": "Libellé",
+                        "Style": {
+                          "FontWeight": "Bold",
+                          "FontSize": "8pt",
+                          "BackgroundColor": "#C5CAE9",
+                          "TextAlign": "Center",
+                          "PaddingTop": "2pt",
+                          "PaddingBottom": "2pt",
+                          "BorderStyle": { "Default": "Solid" },
+                          "BorderWidth": { "Default": "0.5pt" },
+                          "BorderColor": { "Default": "#9FA8DA" }
+                        }
+                      }
+                    },
+                    {
+                      "Item": {
+                        "Type": "TextBox",
+                        "Name": "ColHeaderDebit",
+                        "Value": "Débit",
+                        "Style": {
+                          "FontWeight": "Bold",
+                          "FontSize": "8pt",
+                          "BackgroundColor": "#C5CAE9",
+                          "TextAlign": "Center",
+                          "PaddingTop": "2pt",
+                          "PaddingBottom": "2pt",
+                          "BorderStyle": { "Default": "Solid" },
+                          "BorderWidth": { "Default": "0.5pt" },
+                          "BorderColor": { "Default": "#9FA8DA" }
+                        }
+                      }
+                    },
+                    {
+                      "Item": {
+                        "Type": "TextBox",
+                        "Name": "ColHeaderCredit",
+                        "Value": "Crédit",
+                        "Style": {
+                          "FontWeight": "Bold",
+                          "FontSize": "8pt",
+                          "BackgroundColor": "#C5CAE9",
+                          "TextAlign": "Center",
+                          "PaddingTop": "2pt",
+                          "PaddingBottom": "2pt",
+                          "BorderStyle": { "Default": "Solid" },
+                          "BorderWidth": { "Default": "0.5pt" },
+                          "BorderColor": { "Default": "#9FA8DA" }
+                        }
+                      }
+                    },
+                    {
+                      "Item": {
+                        "Type": "TextBox",
+                        "Name": "ColHeaderSolde",
+                        "Value": "Solde",
+                        "Style": {
+                          "FontWeight": "Bold",
+                          "FontSize": "8pt",
+                          "BackgroundColor": "#C5CAE9",
+                          "TextAlign": "Center",
+                          "PaddingTop": "2pt",
+                          "PaddingBottom": "2pt",
+                          "BorderStyle": { "Default": "Solid" },
+                          "BorderWidth": { "Default": "0.5pt" },
+                          "BorderColor": { "Default": "#9FA8DA" }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ],
+              "RepeatOnNewPage": true
+            },
+            "Footer": {
+              "TableRows": [
+                {
+                  "Height": "0.6cm",
+                  "TableCells": [
+                    {
+                      "Item": {
+                        "Type": "TextBox",
+                        "Name": "TotalCompteLabel",
+                        "Value": "=\"Total \" & Fields!CompteNumero.Value",
+                        "Style": {
+                          "FontWeight": "Bold",
+                          "FontSize": "8pt",
+                          "BackgroundColor": "#E8EAF6",
+                          "PaddingLeft": "4pt",
+                          "PaddingTop": "2pt",
+                          "BorderStyle": { "Default": "Solid" },
+                          "BorderWidth": { "Default": "0.5pt" },
+                          "BorderColor": { "Default": "#9FA8DA" }
+                        }
+                      },
+                      "ColSpan": 3
+                    },
+                    {
+                      "Item": {
+                        "Type": "TextBox",
+                        "Name": "TotalCompteDebit",
+                        "Value": "=Sum(Fields!Debit.Value)",
+                        "Style": {
+                          "FontWeight": "Bold",
+                          "FontSize": "8pt",
+                          "BackgroundColor": "#E8EAF6",
+                          "TextAlign": "Right",
+                          "Format": "#,##0.00",
+                          "PaddingRight": "4pt",
+                          "PaddingTop": "2pt",
+                          "BorderStyle": { "Default": "Solid" },
+                          "BorderWidth": { "Default": "0.5pt" },
+                          "BorderColor": { "Default": "#9FA8DA" }
+                        }
+                      }
+                    },
+                    {
+                      "Item": {
+                        "Type": "TextBox",
+                        "Name": "TotalCompteCredit",
+                        "Value": "=Sum(Fields!Credit.Value)",
+                        "Style": {
+                          "FontWeight": "Bold",
+                          "FontSize": "8pt",
+                          "BackgroundColor": "#E8EAF6",
+                          "TextAlign": "Right",
+                          "Format": "#,##0.00",
+                          "PaddingRight": "4pt",
+                          "PaddingTop": "2pt",
+                          "BorderStyle": { "Default": "Solid" },
+                          "BorderWidth": { "Default": "0.5pt" },
+                          "BorderColor": { "Default": "#9FA8DA" }
+                        }
+                      }
+                    },
+                    {
+                      "Item": {
+                        "Type": "TextBox",
+                        "Name": "TotalCompteSolde",
+                        "Value": "=Sum(Fields!Debit.Value) - Sum(Fields!Credit.Value)",
+                        "Style": {
+                          "FontWeight": "Bold",
+                          "FontSize": "8pt",
+                          "BackgroundColor": "#E8EAF6",
+                          "TextAlign": "Right",
+                          "Format": "#,##0.00",
+                          "PaddingRight": "4pt",
+                          "PaddingTop": "2pt",
+                          "BorderStyle": { "Default": "Solid" },
+                          "BorderWidth": { "Default": "0.5pt" },
+                          "BorderColor": { "Default": "#9FA8DA" }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "Header": {
+          "TableRows": [
+            {
+              "Height": "1.2cm",
+              "TableCells": [
+                {
+                  "Item": {
+                    "Type": "TextBox",
+                    "Name": "ReportTitle",
+                    "Value": "GRAND LIVRE COMPTABLE",
+                    "Style": {
+                      "FontWeight": "Bold",
+                      "FontSize": "16pt",
+                      "TextAlign": "Center",
+                      "PaddingTop": "6pt",
+                      "PaddingBottom": "6pt",
+                      "Color": "#1A237E"
+                    },
+                    "CanGrow": true
+                  },
+                  "ColSpan": 6
+                }
+              ]
+            }
+          ],
+          "RepeatOnNewPage": true
+        },
+        "Footer": {
+          "TableRows": [
+            {
+              "Height": "0.8cm",
+              "TableCells": [
+                {
+                  "Item": {
+                    "Type": "TextBox",
+                    "Name": "GrandTotalLabel",
+                    "Value": "TOTAL GENERAL",
+                    "Style": {
+                      "FontWeight": "Bold",
+                      "FontSize": "10pt",
+                      "BackgroundColor": "#1A237E",
+                      "Color": "White",
+                      "PaddingLeft": "4pt",
+                      "PaddingTop": "4pt",
+                      "BorderStyle": { "Default": "Solid" },
+                      "BorderWidth": { "Default": "1pt" },
+                      "BorderColor": { "Default": "#1A237E" }
+                    }
+                  },
+                  "ColSpan": 3
+                },
+                {
+                  "Item": {
+                    "Type": "TextBox",
+                    "Name": "GrandTotalDebit",
+                    "Value": "=Sum(Fields!Debit.Value)",
+                    "Style": {
+                      "FontWeight": "Bold",
+                      "FontSize": "10pt",
+                      "BackgroundColor": "#1A237E",
+                      "Color": "White",
+                      "TextAlign": "Right",
+                      "Format": "#,##0.00",
+                      "PaddingRight": "4pt",
+                      "PaddingTop": "4pt",
+                      "BorderStyle": { "Default": "Solid" },
+                      "BorderWidth": { "Default": "1pt" },
+                      "BorderColor": { "Default": "#1A237E" }
+                    }
+                  }
+                },
+                {
+                  "Item": {
+                    "Type": "TextBox",
+                    "Name": "GrandTotalCredit",
+                    "Value": "=Sum(Fields!Credit.Value)",
+                    "Style": {
+                      "FontWeight": "Bold",
+                      "FontSize": "10pt",
+                      "BackgroundColor": "#1A237E",
+                      "Color": "White",
+                      "TextAlign": "Right",
+                      "Format": "#,##0.00",
+                      "PaddingRight": "4pt",
+                      "PaddingTop": "4pt",
+                      "BorderStyle": { "Default": "Solid" },
+                      "BorderWidth": { "Default": "1pt" },
+                      "BorderColor": { "Default": "#1A237E" }
+                    }
+                  }
+                },
+                {
+                  "Item": {
+                    "Type": "TextBox",
+                    "Name": "GrandTotalSolde",
+                    "Value": "=Sum(Fields!Debit.Value) - Sum(Fields!Credit.Value)",
+                    "Style": {
+                      "FontWeight": "Bold",
+                      "FontSize": "10pt",
+                      "BackgroundColor": "#1A237E",
+                      "Color": "White",
+                      "TextAlign": "Right",
+                      "Format": "#,##0.00",
+                      "PaddingRight": "4pt",
+                      "PaddingTop": "4pt",
+                      "BorderStyle": { "Default": "Solid" },
+                      "BorderWidth": { "Default": "1pt" },
+                      "BorderColor": { "Default": "#1A237E" }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "TableColumns": [
+          { "Width": "2.5cm" },
+          { "Width": "2.5cm" },
+          { "Width": "6cm" },
+          { "Width": "2.5cm" },
+          { "Width": "2.5cm" },
+          { "Width": "2cm" }
+        ],
+        "Details": {
+          "TableRows": [
+            {
+              "Height": "0.5cm",
+              "TableCells": [
+                {
+                  "Item": {
+                    "Type": "TextBox",
+                    "Name": "CellPiece",
+                    "Value": "=IIF(Parameters!PieceColumn.Value = \"NumeroPiece\", Fields!NumeroPiece.Value, IIF(Parameters!PieceColumn.Value = \"ID\", Fields!EcritureID.Value, Fields!NumeroEcriture.Value))",
+                    "Style": {
+                      "FontSize": "7pt",
+                      "PaddingLeft": "2pt",
+                      "PaddingTop": "1pt",
+                      "BorderStyle": {
+                        "Bottom": "Solid"
+                      },
+                      "BorderWidth": {
+                        "Bottom": "0.25pt"
+                      },
+                      "BorderColor": {
+                        "Bottom": "#E0E0E0"
+                      }
+                    },
+                    "CanGrow": true
+                  }
+                },
+                {
+                  "Item": {
+                    "Type": "TextBox",
+                    "Name": "CellDate",
+                    "Value": "=Fields!DateOperation.Value",
+                    "Style": {
+                      "FontSize": "7pt",
+                      "TextAlign": "Center",
+                      "PaddingTop": "1pt",
+                      "BorderStyle": {
+                        "Bottom": "Solid"
+                      },
+                      "BorderWidth": {
+                        "Bottom": "0.25pt"
+                      },
+                      "BorderColor": {
+                        "Bottom": "#E0E0E0"
+                      }
+                    }
+                  }
+                },
+                {
+                  "Item": {
+                    "Type": "TextBox",
+                    "Name": "CellLibelle",
+                    "Value": "=Fields!Libelle.Value",
+                    "Style": {
+                      "FontSize": "7pt",
+                      "PaddingLeft": "2pt",
+                      "PaddingTop": "1pt",
+                      "BorderStyle": {
+                        "Bottom": "Solid"
+                      },
+                      "BorderWidth": {
+                        "Bottom": "0.25pt"
+                      },
+                      "BorderColor": {
+                        "Bottom": "#E0E0E0"
+                      }
+                    },
+                    "CanGrow": true
+                  }
+                },
+                {
+                  "Item": {
+                    "Type": "TextBox",
+                    "Name": "CellDebit",
+                    "Value": "=IIF(Fields!Debit.Value = 0, \"\", Fields!Debit.Value)",
+                    "Style": {
+                      "FontSize": "7pt",
+                      "TextAlign": "Right",
+                      "Format": "#,##0.00",
+                      "PaddingRight": "4pt",
+                      "PaddingTop": "1pt",
+                      "BorderStyle": {
+                        "Bottom": "Solid"
+                      },
+                      "BorderWidth": {
+                        "Bottom": "0.25pt"
+                      },
+                      "BorderColor": {
+                        "Bottom": "#E0E0E0"
+                      }
+                    }
+                  }
+                },
+                {
+                  "Item": {
+                    "Type": "TextBox",
+                    "Name": "CellCredit",
+                    "Value": "=IIF(Fields!Credit.Value = 0, \"\", Fields!Credit.Value)",
+                    "Style": {
+                      "FontSize": "7pt",
+                      "TextAlign": "Right",
+                      "Format": "#,##0.00",
+                      "PaddingRight": "4pt",
+                      "PaddingTop": "1pt",
+                      "BorderStyle": {
+                        "Bottom": "Solid"
+                      },
+                      "BorderWidth": {
+                        "Bottom": "0.25pt"
+                      },
+                      "BorderColor": {
+                        "Bottom": "#E0E0E0"
+                      }
+                    }
+                  }
+                },
+                {
+                  "Item": {
+                    "Type": "TextBox",
+                    "Name": "CellSolde",
+                    "Value": "=RunningValue(Fields!Debit.Value, Sum, \"GroupeCompte\") - RunningValue(Fields!Credit.Value, Sum, \"GroupeCompte\")",
+                    "Style": {
+                      "FontSize": "7pt",
+                      "TextAlign": "Right",
+                      "Format": "#,##0.00",
+                      "PaddingRight": "4pt",
+                      "PaddingTop": "1pt",
+                      "BorderStyle": {
+                        "Bottom": "Solid"
+                      },
+                      "BorderWidth": {
+                        "Bottom": "0.25pt"
+                      },
+                      "BorderColor": {
+                        "Bottom": "#E0E0E0"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "PageHeader": {
+    "Height": "0.8cm",
+    "PrintOnFirstPage": true,
+    "PrintOnLastPage": true,
+    "ReportItems": [
+      {
+        "Type": "TextBox",
+        "Name": "PageHeaderDate",
+        "Value": "=\"Édité le \" & Format(Today(), \"dd/MM/yyyy\")",
+        "Left": "0cm",
+        "Top": "0cm",
+        "Width": "6cm",
+        "Height": "0.6cm",
+        "Style": {
+          "FontSize": "7pt",
+          "Color": "#757575"
+        }
+      },
+      {
+        "Type": "TextBox",
+        "Name": "PageHeaderTitle",
+        "Value": "Grand Livre Comptable",
+        "Left": "6cm",
+        "Top": "0cm",
+        "Width": "6cm",
+        "Height": "0.6cm",
+        "Style": {
+          "FontSize": "8pt",
+          "FontWeight": "Bold",
+          "TextAlign": "Center",
+          "Color": "#1A237E"
+        }
+      }
+    ]
+  },
+  "PageFooter": {
+    "Height": "0.8cm",
+    "PrintOnFirstPage": true,
+    "PrintOnLastPage": true,
+    "ReportItems": [
+      {
+        "Type": "TextBox",
+        "Name": "PageFooterNumber",
+        "Value": "=\"Page \" & Globals!PageNumber & \" / \" & Globals!TotalPages",
+        "Left": "6cm",
+        "Top": "0cm",
+        "Width": "6cm",
+        "Height": "0.6cm",
+        "Style": {
+          "FontSize": "8pt",
+          "TextAlign": "Center",
+          "Color": "#757575"
+        }
+      }
+    ]
+  }
+}

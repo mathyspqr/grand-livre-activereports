@@ -1,0 +1,6 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "ng build",
+  "outputDirectory": "dist/grand-livre-poc/browser",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}

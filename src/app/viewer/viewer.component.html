@@ -1,0 +1,81 @@
+<div class="toolbar">
+  <a routerLink="/">Accueil</a>
+  <a routerLink="/designer">Designer</a>
+  <span class="separator">|</span>
+  <label>
+    Colonne référence :
+    <select [(ngModel)]="pieceColumnChoice" (ngModelChange)="onPieceColumnChange()">
+      <option value="NumeroPiece">N° Pièce</option>
+      <option value="ID">ID écriture</option>
+      <option value="Numero">N° Écriture</option>
+    </select>
+  </label>
+  <span class="separator">|</span>
+  <button type="button" (click)="planInput.click()" [disabled]="isLoading">
+    Charger le plan comptable
+  </button>
+  <input
+    #planInput
+    type="file"
+    accept=".json,application/json"
+    hidden
+    (change)="onPlanSelected($event)" />
+  <button type="button" (click)="fileInput.click()" [disabled]="isLoading">
+    Charger des écritures
+  </button>
+  <input
+    #fileInput
+    type="file"
+    accept=".json,application/json"
+    hidden
+    (change)="onFileSelected($event)" />
+  <span class="separator">|</span>
+  <button type="button" (click)="templateInput.click()" [disabled]="isLoading">
+    Charger un modèle
+  </button>
+  <input
+    #templateInput
+    type="file"
+    accept=".rdlx-json,.json,application/json"
+    hidden
+    (change)="onTemplateSelected($event)" />
+  <button
+    type="button"
+    class="reset"
+    *ngIf="customTemplateName"
+    (click)="resetTemplate()">
+    Modèle d'origine
+  </button>
+  <span class="info" *ngIf="planCount > 0">{{ planCount }} comptes</span>
+  <span class="info" *ngIf="ecrituresCount > 0">
+    {{ ecrituresCount }} écritures
+  </span>
+  <span class="info template" *ngIf="customTemplateName">
+    Modèle : {{ customTemplateName }}
+  </span>
+  <span class="error" *ngIf="errorMessage">{{ errorMessage }}</span>
+</div>
+
+<div class="report-area">
+  <div class="placeholder" *ngIf="!hasReport">
+    <div class="placeholder-card">
+      <h2>Importez vos données</h2>
+      <p>
+        1. <strong>Charger le plan comptable</strong> (référentiel des comptes)<br />
+        2. <strong>Charger des écritures</strong> (<code>Ecriture.json</code>)
+      </p>
+      <p class="muted">
+        Le grand livre se génère dès que les deux fichiers sont chargés
+        (jointure Compte → Numéro). Aucune donnée n'est embarquée dans l'application.
+      </p>
+    </div>
+  </div>
+  <gc-activereports-viewer
+    #viewer
+    [width]="'100%'"
+    [height]="'calc(100vh - 50px)'"
+    [availableExports]="['pdf']"
+    [language]="'fr'"
+    (init)="onViewerInit()">
+  </gc-activereports-viewer>
+</div>

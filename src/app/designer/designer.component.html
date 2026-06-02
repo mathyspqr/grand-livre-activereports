@@ -1,0 +1,13 @@
+<div class="toolbar">
+  <a routerLink="/">Accueil</a>
+  <a routerLink="/viewer">Viewer</a>
+  <span class="separator">|</span>
+  <button (click)="saveReport()">Sauvegarder (JSON)</button>
+</div>
+<gc-activereports-designer
+  #designer
+  [width]="'100%'"
+  [height]="'calc(100vh - 50px)'"
+  [dataSources]="dataSources"
+  [onSave]="onSaveHandler">
+</gc-activereports-designer>
